@@ -150,9 +150,3 @@ SPEE_LIMIT_DELAYING_TIME_IN_MS="500"
 
 ```
 
-## Project Status
-Project is: _in progress_
-
-## Room for Improvement
-There are always room for improvement, in this project so far the thinkgs that can be improved are:
-- A separate web page for the Docs containing the API catalogs.
