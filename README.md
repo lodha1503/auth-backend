@@ -1,7 +1,6 @@
 # Auth Backend
 > Typescript RESTful backend application template for User Authentication and Authorization.
 
-👉 **STAR ⭐ this project for later use and to keep posted on the changes.**
 
 ## Table of Contents
 - Auth Backend
@@ -14,13 +13,9 @@
     - [Security](#security)
     - [Testing](#testing)
   - [Setup](#setup)
-  - [Project Status](#project-status)
-  - [Room for Improvement](#room-for-improvement)
 
 
-## General Information
-- This project was created to fullfil the need several Software Engineers have when trying to create a Fullstack Web project from scratch.
-- It provides the source code backend template to authenticate and authorize users by exposing RESTful APIs. It also secures the APIs with techniques such as Limiting the number of calls per IP and delaying the calls reponse.
+
 
 ## Features
 - Username and password signup ✔
