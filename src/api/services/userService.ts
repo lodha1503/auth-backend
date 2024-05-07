@@ -13,10 +13,13 @@ const createUser = async (
   password: string
 ): Promise<IUser | string> => {
   try {
+    console.log("Hi");
+
     //verify the new username is unique
     const existingUser = await User.find({
       $or: [{ username }, { email }],
     });
+    console.log("Hi2");
 
     if (existingUser.length > 0) {
       return "The information provided belongs to an existing user.";
@@ -27,7 +30,6 @@ const createUser = async (
       password: await bcrypt.hash(password, envValues.SaltLength),
       email,
     });
-
     return await user.save();
   } catch (error) {
     throw new Error("Error when creating a user: " + error);

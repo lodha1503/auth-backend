@@ -1,4 +1,4 @@
-import { IAuthPayload } from "../interfaces/shared";
+import { IAuthPayload } from "../Interfaces/shared";
 import { NextFunction, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
@@ -40,18 +40,17 @@ const registerUser = async (
     returnErrorMessage(res, validationErrors.array());
     return;
   }
-
   try {
     const user = await createUser(
       req.body.username,
       req.body.email,
       req.body.password
     );
-
     if (typeof user === "string") {
       returnErrorMessage(res, "User was not created: " + user);
       return;
     }
+    console.log("User OK");
 
     const requesOriginAddress = req.protocol + "://" + req.get("host");
     const verificationURL = getUserVerificationURL(
@@ -76,6 +75,8 @@ const registerUser = async (
   return;
 };
 
+
+//Signup is an array of middleware functions
 const signUp = [
   body("email").trim().isEmail(),
   body("username").trim().isLength({ min: 5 }),

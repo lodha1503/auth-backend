@@ -18,11 +18,11 @@ const configurePassportMiddlewares = () => {
           const user = await User.findOne({ username }).exec();
 
           if (!user) {
-            return done("User does not exists.", null);
+            return done(null,false,{message:"User does not exists."});
           }
 
           if (!user.verified) {
-            return done("User not verified.", null);
+            return done(null,false,{message:"User not verified."});
           }
 
           const isPasswordCorrect = await bcrypt.compare(
@@ -31,7 +31,7 @@ const configurePassportMiddlewares = () => {
           );
 
           if (!isPasswordCorrect) {
-            return done("Incorrect password.", null);
+            return done(null,false,{message:"Incorrect password."});
           }
 
           return done(null, user);
