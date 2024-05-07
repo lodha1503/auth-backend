@@ -13,8 +13,6 @@ const createUser = async (
   password: string
 ): Promise<IUser | string> => {
   try {
-    console.log("Hi");
-
     //verify the new username is unique
     const existingUser = await User.find({
       $or: [{ username }, { email }],

@@ -93,14 +93,22 @@ const signUp = [
   registerUser,
 ];
 
-//TODO: create a middleware or validator to receive username and password
+//creating a middleware or validator to receive username and password
+const validateLoginInputs = (req:Request,res:Response,next:NextFunction)=>{
+  const {username,password}=req.body;
+  if (!username || !password) {
+    return res.status(HttpStatusCodes.BAD_REQUEST).json({ error: 'Username and password are required.' });
+  }
+  next();
+
+}
+
 const signIn = async (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate("local", { session: false }, (error, user: IUser) => {
     if (error || !user) {
       returnErrorMessage(res, error ? error : "No User Found");
       return;
     }
-
     //We create the payload to be encrypted then in the JWT token
     const payload: IAuthPayload = {
       id: user._id,
@@ -112,8 +120,10 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
       //generate a signed json web token and return it in the response
       const token = generateAuthorizationToken(payload);
 
-      //assign our jwt to the cookie. If there is no cookie set to true in the env variables file, then you are goin to use: Authorizarion Bearer <Token>
+      //assign our jwt to the cookie. If there is no cookie set to true in the env variables file, then you are going to use: Authorizarion Bearer <Token>
+
       if (envValues.tokenFromCookie) {
+        //set cookies in the HTTP response headers.
         res.cookie(envValues.jwtCookieName, token, { httpOnly: true });
       }
 
@@ -159,4 +169,4 @@ const verifyAccount = async (req: Request, res: Response) => {
   return;
 };
 
-export { signUp, signIn, verifyAccount };
+export { signUp, signIn, verifyAccount ,validateLoginInputs};

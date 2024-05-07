@@ -21,6 +21,7 @@ const configureApp = () => {
   //Setting when the server is behind a Load Balancer or a Reverse Proxy, making the rate limiter effectively a global one and blocking all requests once the limit is reached. Check more at: https://github.com/express-rate-limit/express-rate-limit
   app.set("trust proxy", 1 /*numberOfProxies*/);
   //#endregion
+  // Allow requests from http://localhost:3000
 
   //#region Middlewares
   app.use(cors());
