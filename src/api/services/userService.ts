@@ -17,7 +17,6 @@ const createUser = async (
     const existingUser = await User.find({
       $or: [{ username }, { email }],
     });
-    console.log("Hi2");
 
     if (existingUser.length > 0) {
       return "The information provided belongs to an existing user.";

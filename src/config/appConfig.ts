@@ -1,9 +1,9 @@
 import errorHandler from "../api/middlewares/errorHandler";
+import express, { Request, Response, NextFunction,Application  } from "express";
 import notFound from "../api/middlewares/notFound";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express, { Application } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { getAuthRouter } from "../api/routers/authRouter";
@@ -31,6 +31,32 @@ const configureApp = () => {
   app.use(express.json()); //To let the appplication understand data in json format when it comes in the Request.body
   app.use(express.urlencoded({ extended: true })); //To encode the data that is comming in Request.body
   //Checking if we really need for the cookie parser
+
+
+  const ALLOWED_ORIGINS = ["http://localhost:3000"];
+  app.use(
+    cors({
+      origin: ALLOWED_ORIGINS,
+      credentials: true,
+    })
+  );
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const origin = String(req.headers.origin);
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    if (ALLOWED_ORIGINS.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    next();
+  });
+
+
+
+
   if (config.tokenFromCookie) {
     app.use(cookieParser());
   }
